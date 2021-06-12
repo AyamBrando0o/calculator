@@ -1,3 +1,5 @@
+buttons = document.getElementsByClassName("grid-item");
+
 function add(a,b){
     return a + b;
 }
@@ -26,4 +28,12 @@ function operate(operator, a, b){
             return divide(a,b);
     }
 
+}
+
+function display(e){
+    document.querySelector('.displayed_number').innerHTML = e.target.innerHTML;
+}
+
+for (i=0; i<buttons.length; i++){
+    buttons[i].addEventListener('click',display);
 }
