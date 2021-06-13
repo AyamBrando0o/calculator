@@ -31,26 +31,35 @@ function remainder(a,b){
 function operate(operator, a, b){
     switch(operator){
         case 'add':
-            answer = add(a,b).toString();
-            if (answer.length > 14){
-                answer = answer.substring(0,13);
+            answer = add(a,b);
+            if (answer.toString().length > 14){
+                answer = answer.toExponential(7);
             }
             return answer;
         case 'subtract':
             answer = subtract(a,b);
+            return answer;
         case 'multiply':
             answer = multiply(a,b);
+            if (answer.toString().length > 14){
+                answer = answer.toExponential(7);
+            }
+            return answer;
         case 'divide':
             answer = divide(a,b);
+            if (answer.toString().length > 14){
+                answer = answer.toFixed(10);
+            }
+            return answer;
         case 'power':
-            answer = power(a,b).toString();
-            console.log(answer.length);
-            if (answer.length > 14){
-                answer = answer.substring(0,13);
+            answer = power(a,b);
+            if (answer.toString().length > 14){
+                answer = answer.toExponential(7);
             }
             return answer;
         case 'remainder':
             answer = remainder(a,b);
+            return answer;
     }
 
 }
@@ -68,6 +77,9 @@ function clicked_operators(e){
         calculated_value = input_value;
         input_value = '';
         //else calculated_value = operate(operator_chosen, calculated_value, input_value);
+    }
+    else if (operator_chosen == 'equal'){
+        operator_chosen = e.target.id;
     }
     else {
         calculated_value = operate(operator_chosen, calculated_value, input_value);
@@ -89,8 +101,8 @@ function clicked_equal(e){
     calculated_value = operate(operator_chosen, calculated_value, input_value);
     document.querySelector('.displayed_number').innerHTML = calculated_value; 
     input_value = '';
-    calculated_value = '';
-    operator_chosen = '';
+    operator_chosen = 'equal';
+    //calculated_value = '';
 }
 
 function clicked_delete(e){
@@ -104,6 +116,10 @@ function clicked_convert(e){
     if (input_value != ''){
         input_value = multiply(-1, input_value);
         document.querySelector('.displayed_number').innerHTML = input_value;
+    }
+    else if (operator_chosen == 'equal'){
+        calculated_value = multiply(-1, calculated_value);
+        document.querySelector('.displayed_number').innerHTML = calculated_value;
     }
 }
 
